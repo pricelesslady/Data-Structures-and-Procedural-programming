@@ -1,0 +1,62 @@
+// --- Procedure Definition ---
+// This procedure calculates the dot product of two vectors (v1 and v2).
+// It uses a VAR parameter (ps) to return the calculated value to the calling algorithm.
+PROCEDURE dot_product(v1, v2 : ARRAY_OF FLOAT, VAR ps : FLOAT)
+VAR 
+    i : INTEGER // Index for iterating through the array elements
+BEGIN
+    ps := 0 // Initialize the result variable to zero before starting the sum
+    
+    // Inner loop: iterates through each element of the vectors
+    // Note: v1 and v2 must be of the same length
+    FOR i FROM 0 TO v1.length - 1 DO
+        // Multiply corresponding elements and add them to the running total (ps)
+        ps := ps + (v1[i] * v2[i])
+    END_FOR
+END
+
+// --- Main Algorithm ---
+// This algorithm determines if 'n' pairs of vectors are orthogonal.
+ALGORITHM Orthogonal_Check_Nested
+VAR 
+    v1, v2 : ARRAY_OF FLOAT // Arrays to store the components of each vector pair
+    n, i : INTEGER           // 'n' is the number of pairs, 'i' is the loop counter
+    ps : FLOAT               // Variable to hold the dot product result from the procedure
+BEGIN
+    // Step 1: Get the total number of vector pairs to check from the user
+    Read(n)
+    
+    // Outer loop: iterates through each of the 'n' pairs
+    FOR i FROM 1 TO n DO
+        // Step 2: Populate the arrays with user input (helper procedure call)
+        Read_Vector(v1)
+        Read_Vector(v2)
+        
+        // Step 3: Execute the procedure. 
+        // 'ps' is passed by reference (VAR), so its value is updated directly.
+        dot_product(v1, v2, ps)
+        
+        // Step 4: Check the orthogonality condition.
+        // Two vectors are orthogonal if their dot product equals zero.
+        IF (ps = 0) THEN
+            Write("Vectors are orthogonal")
+        ELSE
+            Write("Vectors are NOT orthogonal")
+        END_IF
+    END_FOR
+END
+
+//function
+FUNCTION dot_product_func(v1, v2 : ARRAY_OF FLOAT) : FLOAT
+VAR i : INTEGER
+    res : FLOAT := 0
+BEGIN
+    FOR i FROM 0 TO v1.length - 1 DO
+        res := res + (v1[i] * v2[i])
+    END_FOR
+    RETURN res
+END
+
+// In the main algorithm, you would simply call:
+// IF (dot_product_func(v1, v2) = 0) THEN ...
+ 

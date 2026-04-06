@@ -1,0 +1,28 @@
+def sum_of_distinct_elements(set1, set2):
+    /*Calculates the sum of all elements that are unique to either of the input sets.
+    An element is 'distinct' if it appears exactly once across both collections combined.*/
+    
+    /*# 1. Initialize the total_sum to track all the distint number sum in the both set.*/
+    total_sum = 0
+    
+    /*# 2. Combine both input lists and iterate through every number.
+    # This ensures we process all candidates that could potentially be distinct.
+    # Check elements in Set 1 not in Set 2. When we find an element not in both set, we add them up*/
+    for element in set1:
+        if element not in set2:
+            total_sum += element
+            
+
+    /*# 3. Filter the hash map for elements that have a total count of exactly 1.
+    # If a number appears in both sets, its count will be 2 (or more).
+    # If it appears in only one set (and only once within that set), its count will be 1.*/
+    for element in set2:
+        if element not in set1:
+            total_sum += element
+            
+    return total_sum
+
+/*# Example Usage
+s1 = [3, 1, 7, 9]
+s2 = [2, 4, 1, 9, 3]
+print(sum_of_distinct_elements(s1, s2))  # Output: 13 (Distinct: 7, 2, 4)*/
